@@ -45,14 +45,40 @@ int main()
 	/*printf("\n%d  %f\n",graphe_get_n(&g),DBL_MAX);*/
 	//partie Prim 
 	
-	statut = graphe_acm_prim(&g, 0,&acm);
+	
+	//----prim O(V^2)
+	/*statut = graphe_acm_prim(&g, 0,&acm);
 	if (statut == 0) {
 		graphe_ecrire_dot_avec_acm(&g, &acm,"acm_prim.dot");
 		system("dot -Tx11 acm_prim.dot");
 		system("dot -Tpdf acm_prim.dot -o acm_prim.pdf");
 		graphe_detruire(&acm);
+	}*/
+	
+	
+	//--kruscal O(ElogV)
+	statut = graphe_acm_kruskal(&g,&acm);
+	if (statut == 0) {
+		graphe_ecrire_dot_avec_acm(&g, &acm,"acm_kruskal.dot");
+		system("dot -Tx11 acm_kruskal.dot");
+		system("dot -Tpdf acm_prim.dot -o acm_kruskal.pdf");
+		graphe_detruire(&acm);
 	}
+	
+	
 	graphe_detruire(&g);
-	graphe_detruire(&acm);
 	return EXIT_SUCCESS;
 }
+
+
+/* partie Kruskal */
+/*{ 
+		graphe acm;
+		int statut = graphe_acm_kruskal(&g, &acm);
+			if (statut == 0) {
+				graphe_ecrire_dot_avec_acm(&g, &acm,
+					"acm_kruskal.dot");
+				system("dot -Tx11 acm_kruskal.dot");
+				graphe_detruire(&acm);
+			}
+	}*/

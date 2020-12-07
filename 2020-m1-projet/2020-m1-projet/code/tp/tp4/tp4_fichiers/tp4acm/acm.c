@@ -88,6 +88,38 @@ typedef struct arete_t {
 	double cout; /**<coût de l'arête */
 } arete;
 
+typedef struct subset_t{
+	int parent;
+	int rank;
+}subset_t;
+
+int find(subset_t subset [],int i){
+	if(subset[i].parent != i){
+		subset[i].parent=find(subset,subset[i].parent);
+	}
+	
+	return subset[i].parent;
+}
+
+void Union(subset_t subset[],int x,int y){
+	int xroot=find(subset,x);
+	int yroot=find(subset,y);
+	
+	if(subset[xroot].rank < subset[yroot].rank){
+		subset[xroot].parent=yroot;
+	}
+	else if(subset[xroot].rank > subset[yroot].rank){
+		subset[yroot].parent=xroot;
+	}
+	else{
+		subset[yroot].parent=xroot;
+		subset[xroot].rank++;
+	}
+	
+	
+}
+
+
 /**
  * \brief Trie les arêtes du graphe par coût croissant
  * \param g adresse du graphe à lire
@@ -106,8 +138,48 @@ static struct arete_t *graphe_tri_aretes(graphe * g);
 
 int graphe_acm_kruskal(graphe *g, graphe *acm)
 {
-	/* TODO */
-	return -1;
+	int n=graphe_get_n(g);
+	arete result[n];
+	
+	int e=0;
+	int i=0;
+	int v;
+	int x,y;
+	
+	arete * tab=(arete *)malloc(sizeof(arete)*n);
+	tab=graphe_tri_aretes(g);
+	
+	subset_t * subset= (subset_t *)malloc(sizeof(subset_t)*n);
+	
+	for(v=0;v<n;v++){
+		subset[v].parent=v;
+		subset[v].rank=0;
+	}
+	
+	while(e<n && i<graphe_get_m(g)){
+		arete next_edge=tab[i];
+		i=i+1;
+		
+		x=find(subset,next_edge.v);
+		y=find(subset,next_edge.w);
+		
+		if(x!=y){
+			result[e]=next_edge;
+			Union(subset,x,y);
+			e++;
+		}
+	}
+	double cout_final=0;
+	for(i=0;i<e;i++){
+		graphe_ajouter_arete(acm,result[i].v,result[i].w,result[i].cout);
+		cout_final+=result[i].cout;
+	}
+	printf("%f\n",cout_final);
+	free(tab);
+	
+	
+	
+	return 0;
 }
 
 
