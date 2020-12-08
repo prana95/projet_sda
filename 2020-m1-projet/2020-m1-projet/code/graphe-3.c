@@ -159,7 +159,7 @@ int graphe_complet(graphe* g, int n,ListOfCities * cities)
 		return -1;
 	for (v = 0; v < graphe_get_n(g); ++v)
 		for (w = v + 1; w < graphe_get_n(g); ++w)
-			graphe_ajouter_arete(g, v, w, longueur_ville(cities->lon[v],cities->lat[v],cities->lon[w],cities->lat[w]));
+			graphe_ajouter_arete(g, v, w, distance_ville(cities->lon[v],cities->lat[v],cities->lon[w],cities->lat[w]));
 	return 0;
 	
 }

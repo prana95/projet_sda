@@ -14,6 +14,7 @@ struct ListOfCities
 
 ListOfCities* citiesReader(int popMin);
 void freeListOfCities(ListOfCities * cities);
-double longueur_ville(double lon_a, double lat_a,double lon_b, double lat_b);
+double degretoradian(double degre);
+double distance_ville(double lon_a, double lat_a,double lon_b, double lat_b);
 
 #endif

@@ -175,6 +175,7 @@ int graphe_acm_kruskal(graphe *g, graphe *acm)
 		cout_final+=result[i].cout;
 	}
 	printf("%f\n",cout_final);
+	free(subset);
 	free(tab);
 	
 	

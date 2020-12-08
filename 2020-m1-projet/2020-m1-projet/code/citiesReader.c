@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "math.h"
+#define pi 3.141592653589793
 
 
 /**
@@ -166,15 +167,22 @@ ListOfCities* citiesReader(int popMin){
   return cities;
 }
 
-/**
-	distance entre  deuc ville
-*/
+
+/* Pour convertir les degrés en radians */
+double degretoradian(double degre)
+{
+	return ((degre * pi)/180);
+}
 
 
-double longueur_ville(double lon_a, double lat_a,double lon_b, double lat_b){
-	double a,c,d;
-	a=( ( (1-cos(2*((lat_b-lat_a)/2)))/2 )+ (cos(lat_a) * cos(lat_b) * ( (1-cos(2*((lon_b-lon_a)/2)))/2 ) )   );
-	c=2*atan((sqrt(a))/(sqrt(1-a)));
-	d=6371*c;
-	return d;
+/* Fonction pour calculer la distance entre  deux ville */
+
+double distance_ville(double lon_a, double lat_a, double lon_b, double lat_b){
+	double distance, diff, a;
+	
+	diff = lon_a-lon_b;
+	a = sin(degretoradian(lat_a)) * sin(degretoradian(lat_b)) + cos(degretoradian(diff)) * cos(degretoradian(lat_a)) * cos(degretoradian(lat_b));
+	distance = 6371* acos(a);
+	
+	return distance;
 }

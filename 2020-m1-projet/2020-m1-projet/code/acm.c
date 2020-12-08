@@ -173,6 +173,7 @@ int graphe_acm_kruskal(graphe *g, graphe *acm)
 	for(i=0;i<e;i++){
 		graphe_ajouter_arete(acm,result[i].v,result[i].w,result[i].cout);
 	}
+	free(subset);
 	free(tab);
 	
 	
